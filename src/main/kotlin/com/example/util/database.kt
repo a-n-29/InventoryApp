@@ -1,6 +1,6 @@
 package com.example.util
 
-
+import com.example.model.IngredientsEntryTbl
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Transaction
