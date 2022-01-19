@@ -13,6 +13,9 @@ repositories {
 
     }
     maven{
+        url = uri("https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit")
+    }
+    maven{
         url = uri("https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc")
     }
 
@@ -26,8 +29,10 @@ dependencies {
     implementation "no.tornado:tornadofx:$tornadofx_version"
     implementation 'org.jetbrains.exposed:exposed:0.17.14'
     implementation 'org.xerial:sqlite-jdbc:3.25.2'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
 
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:1.6.10"
 
 
 }
