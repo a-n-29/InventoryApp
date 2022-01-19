@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version "1.4.32"
+    id 'org.jetbrains.kotlin.jvm' version "1.6.10"
     id 'application'
 }
 group = 'com.test'
@@ -9,8 +9,13 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven{
-        url "https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed"
+        url = uri("https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed")
+
     }
+    maven{
+        url = uri("https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc")
+    }
+
 }
 
 application {
@@ -19,9 +24,11 @@ application {
 
 dependencies {
     implementation "no.tornado:tornadofx:$tornadofx_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
-    compile "org.jetbrains.exposed:0.17.7"
+    implementation 'org.jetbrains.exposed:exposed:0.17.14'
     implementation 'org.xerial:sqlite-jdbc:3.25.2'
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+
 
 }
 
