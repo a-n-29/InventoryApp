@@ -1,13 +1,28 @@
 package com.example.model
 
+import com.example.model.IngredientsEntryTbl.autoIncrement
+import com.example.model.IngredientsEntryTbl.primaryKey
+import com.example.util.toJavaLocalDate
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import tornadofx.*
+
+fun ResultRow.toIngredientsEntry() = IngredientsEntry(
+    this[IngredientsEntryTbl.itemName],
+    this[IngredientsEntryTbl.subtype],
+    this[IngredientsEntryTbl.storageLocation],
+    this[IngredientsEntryTbl.quantity],
+    this[IngredientsEntryTbl.datePurchased].toLocalDate(),
+    this[IngredientsEntryTbl.additionalInformation]
+
+)
+
 
 object IngredientsEntryTbl : Table(){
 
@@ -43,4 +58,15 @@ class IngredientsEntry(itemName: String, subtype: String, storageLocation: Strin
     override fun toString(): String {
         return "IngredientEntry(itemName=$itemName, subtype=$subtype, storageLocation=$storageLocation, quantity=$quantity, datePurchased=$datePurchased, additionalInformation=$additionalInformation"
     }
+}
+
+class IngredientsEntryModel : ItemViewModel<IngredientsEntry>(){
+
+    val itemName = bind{item?.itemNameProperty}
+    val subtype = bind{item?.subtypeProperty}
+    val storageLocation = bind{item?.storageLocationProperty}
+    val quantity = bind{item?.quantityProperty}
+    val datePurchased = bind{item?.datePurchasedProperty}
+    val additionalInformation = bind{item?.additionalInformationProperty}
+
 }
