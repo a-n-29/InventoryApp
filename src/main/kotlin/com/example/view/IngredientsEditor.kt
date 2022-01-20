@@ -107,6 +107,6 @@ class IngredientsEditor : View("Ingredient Item Editor") {
     }
 
     private fun addItem() {
-        controller.add(model.id.value, model.itemName.value, model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value )
+        controller.add(model.itemName.value, model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value )
     }
 }

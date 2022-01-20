@@ -34,10 +34,10 @@ class ItemController:Controller() {
 
 
 
-    fun add(newId: Int, newItemName: String, newSubtype: String, newStorageLocation: String, newQuantity: Int, newDatePurchased: LocalDate, newAdditionalInformation: String) : IngredientsEntry {
+    fun add( newItemName: String, newSubtype: String, newStorageLocation: String, newQuantity: Int, newDatePurchased: LocalDate, newAdditionalInformation: String) : IngredientsEntry {
         val newEntry = execute {
             IngredientsEntryTbl.insert {
-                it[id] = newId
+                //it[id] = newId
                 it[itemName] = newItemName
                 it[subtype] = newSubtype
                 it[storageLocation] = newStorageLocation
