@@ -45,7 +45,7 @@ class IngredientsEntry(id: Int, itemName: String, subtype: String, storageLocati
     val subtypeProperty = SimpleStringProperty(subtype)
     val subtype by subtypeProperty
 
-    val storageLocationProperty = SimpleStringProperty(itemName)
+    val storageLocationProperty = SimpleStringProperty(storageLocation)
     val storageLocation by storageLocationProperty
 
     val quantityProperty = SimpleIntegerProperty(quantity)
