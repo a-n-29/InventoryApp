@@ -1,7 +1,5 @@
 package com.example.model
 
-import com.example.model.IngredientsEntryTbl.autoIncrement
-import com.example.model.IngredientsEntryTbl.primaryKey
 import com.example.util.toJavaLocalDate
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -18,7 +16,7 @@ fun ResultRow.toIngredientsEntry() = IngredientsEntry(
     this[IngredientsEntryTbl.subtype],
     this[IngredientsEntryTbl.storageLocation],
     this[IngredientsEntryTbl.quantity],
-    this[IngredientsEntryTbl.datePurchased].toLocalDate(),
+    this[IngredientsEntryTbl.datePurchased].toJavaLocalDate(),
     this[IngredientsEntryTbl.additionalInformation]
 
 )
@@ -35,7 +33,7 @@ object IngredientsEntryTbl : Table(){
 
 }
 
-class IngredientsEntry(itemName: String, subtype: String, storageLocation: String, quantity: Int, datePurchased: LocalDate, additionalInformation: String){
+class IngredientsEntry(itemName: String, subtype: String, storageLocation: String, quantity: Int, datePurchased: java.time.LocalDate, additionalInformation: String){
 
     val itemNameProperty = SimpleStringProperty(itemName)
     val itemName by itemNameProperty
@@ -49,7 +47,7 @@ class IngredientsEntry(itemName: String, subtype: String, storageLocation: Strin
     val quantityProperty = SimpleIntegerProperty(quantity)
     val quantity by quantityProperty
 
-    val datePurchasedProperty = SimpleObjectProperty<LocalDate>(datePurchased)
+    val datePurchasedProperty = SimpleObjectProperty<java.time.LocalDate>(datePurchased)
     val datePurchased by datePurchasedProperty
 
     val additionalInformationProperty = SimpleStringProperty(additionalInformation)
