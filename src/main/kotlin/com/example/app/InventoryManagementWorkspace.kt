@@ -1,10 +1,12 @@
 package com.example.app
 
+import com.example.controller.ItemController
 import com.example.model.IngredientsEntryTbl
 import com.example.util.createTables
 import com.example.util.enableConsoleLogger
 import com.example.util.execute
 import com.example.util.toDate
+import com.example.view.IngredientsEditor
 import javafx.scene.control.TabPane
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
@@ -31,8 +33,10 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
         }
 
         // pass in controller(s)
+        ItemController()
 
         // doc our views
+        dock<IngredientsEditor>()
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
