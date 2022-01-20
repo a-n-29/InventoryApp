@@ -1,12 +1,14 @@
 package com.example.view
 
+import com.example.controller.ItemController
 import com.example.model.IngredientsEntryModel
 import tornadofx.*
 
-class IngredientsEditor : View("My View") {
-    override val root = borderpane {
+class IngredientsEditor : View("Ingredient Item Editor") {
+    private val model = IngredientsEntryModel()
+    val controller: ItemController by inject()
 
-        val model = IngredientsEntryModel()
+    override val root = borderpane {
 
         center = vbox {
             form{
@@ -71,7 +73,9 @@ class IngredientsEditor : View("My View") {
 
                 hbox( 10.0){
                     button("Add Item"){
-                        action {  }
+                        action {
+                            addItem()
+                        }
                     }
 
                     button("Delete"){
@@ -83,7 +87,26 @@ class IngredientsEditor : View("My View") {
                     }
                 }
 
+                fieldset {
+                    tableview<IngredientsEntryModel> {
+                        items = controller.items
+
+                        column("ID", IngredientsEntryModel::id)
+                        column("Item Name",IngredientsEntryModel::itemName)
+                        column("Subtype",IngredientsEntryModel::subtype)
+                        column("Storage Location",IngredientsEntryModel::storageLocation)
+                        column("Quantity",IngredientsEntryModel::quantity)
+                        column("Date Purchased",IngredientsEntryModel::datePurchased)
+                        column("Additional Information",IngredientsEntryModel::additionalInformation)
+
+                    }
+                }
+
             }
         }
+    }
+
+    private fun addItem() {
+        controller.add(model.id.value, model.itemName.value, model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value )
     }
 }

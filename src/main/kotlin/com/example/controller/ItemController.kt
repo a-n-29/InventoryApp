@@ -3,17 +3,34 @@ package com.example.controller
 import com.example.model.IngredientsEntry
 import com.example.model.IngredientsEntryModel
 import com.example.model.IngredientsEntryTbl
+import com.example.model.toIngredientsEntry
 import com.example.util.execute
 import com.example.util.toDate
+import javafx.collections.ObservableList
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 import tornadofx.*
 import java.time.LocalDate
 
 class ItemController:Controller() {
 
+    private val listOfItems: ObservableList<IngredientsEntryModel> = execute {
+        IngredientsEntryTbl.selectAll().map{
+            IngredientsEntryModel().apply {
+                item = it.toIngredientsEntry()
+            }
+        }.asObservable()
+    }
+
+    var items: ObservableList<IngredientsEntryModel> by singleAssign()
+
     var ingredientModel = IngredientsEntryModel()
+
+    init {
+        items = listOfItems
+    }
 
 
 
