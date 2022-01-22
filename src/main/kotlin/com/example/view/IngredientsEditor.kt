@@ -14,7 +14,7 @@ class IngredientsEditor : View("Ingredient Item Editor") {
 
     override val root = borderpane {
 
-        center = vbox {
+        left = vbox {
             form{
 
 
@@ -153,6 +153,13 @@ class IngredientsEditor : View("Ingredient Item Editor") {
 
                 }
 
+
+
+            }
+        }
+
+        center = vbox {
+            form{
                 fieldset {
                     tableview<IngredientsEntryModel> {
                         items = controller.items
@@ -173,7 +180,6 @@ class IngredientsEditor : View("Ingredient Item Editor") {
 
                     }
                 }
-
             }
         }
 
