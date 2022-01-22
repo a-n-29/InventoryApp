@@ -2,6 +2,7 @@ package com.example.view
 
 import com.example.controller.ItemController
 import com.example.model.IngredientsEntryModel
+import javafx.scene.input.KeyCode
 import tornadofx.*
 
 class IngredientsEditor : View("Ingredient Item Editor") {
@@ -108,6 +109,14 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                                     it.isNullOrEmpty() -> error("Field cannot be empty")
                                     it.length < 3 -> error("Too short")
                                     else -> null
+                                }
+                            }
+                            setOnKeyPressed {
+                                if (it.code == KeyCode.ENTER)
+                                {
+                                    model.commit{
+                                        addItem()
+                                    }
                                 }
                             }
                         }
