@@ -78,5 +78,6 @@ class ItemController:Controller() {
                 IngredientsEntryTbl.id eq (model.id.value.toInt())
             }
         }
+        listOfItems.remove(model)
     }
 }

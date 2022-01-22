@@ -9,6 +9,8 @@ class IngredientsEditor : View("Ingredient Item Editor") {
     private val model = IngredientsEntryModel()
     val controller: ItemController by inject()
 
+    var mTableView: TableViewEditModel<IngredientsEntryModel> by singleAssign()
+
     override val root = borderpane {
 
         center = vbox {
@@ -138,7 +140,10 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     }
 
                     button("Delete"){
-                        action {  }
+                        action {
+                            val selectedItem = mTableView.tableView.selectedItem
+                            controller.delete(selectedItem!!)
+                        }
                     }
 
                     button("Reset"){
@@ -150,6 +155,7 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                 fieldset {
                     tableview<IngredientsEntryModel> {
                         items = controller.items
+                        mTableView = editModel
 
                         column("ID", IngredientsEntryModel::id)
                         column("Item Name",IngredientsEntryModel::itemName)
