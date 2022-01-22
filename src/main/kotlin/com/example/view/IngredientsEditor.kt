@@ -18,6 +18,14 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Item Name"){
                         maxWidth=220.0
                         textfield(model.itemName){
+                            this.required()
+                            validator{
+                                when{
+                                    it.isNullOrEmpty() -> error("Field cannot be empty")
+                                    it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
 
                         }
                     }
@@ -27,7 +35,14 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Subtype") {
                         maxWidth=220.0
                         textfield(model.subtype){
-
+                            this.required()
+                            validator{
+                                when{
+                                    it.isNullOrEmpty() -> error("Field cannot be empty")
+                                    it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
                         }
 
                     }
@@ -37,7 +52,14 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Storage Location") {
                         maxWidth=220.0
                         textfield(model.storageLocation){
-
+                            this.required()
+                            validator{
+                                when{
+                                    it.isNullOrEmpty() -> error("Field cannot be empty")
+                                    it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
                         }
 
                     }
@@ -47,7 +69,13 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Quantity") {
                         maxWidth=220.0
                         textfield(model.quantity){
-
+                            this.required()
+                            validator{
+                                when(it){
+                                    null -> error("The quantity cannot be blank")
+                                    else -> null
+                                }
+                            }
                         }
 
                     }
@@ -57,6 +85,15 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Date Purchased") {
                         maxWidth=220.0
                         datepicker(model.datePurchased){
+                            this.required()
+                            validator {
+                                when {
+                                    it?.dayOfMonth.toString().isEmpty()
+                                            || it?.month.toString().isEmpty()
+                                            || it?.year.toString().isEmpty() -> error("The date entry cannot be blank")
+                                    else -> null
+                                }
+                            }
                         }
                     }
                 }
@@ -65,16 +102,28 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     field("Additional Information") {
                         maxWidth=220.0
                         textfield(model.additionalInformation){
-
+                            this.required()
+                            validator{
+                                when{
+                                    it.isNullOrEmpty() -> error("Field cannot be empty")
+                                    it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
                         }
 
                     }
                 }
 
                 hbox( 10.0){
+
                     button("Add Item"){
+                        enableWhen(model.valid)
                         action {
-                            addItem()
+                            model.commit{
+                                addItem()
+                                model.rollback()
+                            }
                         }
                     }
 
@@ -85,6 +134,7 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     button("Reset"){
                         action {  }
                     }
+
                 }
 
                 fieldset {
