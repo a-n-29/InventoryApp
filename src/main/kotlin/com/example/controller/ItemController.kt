@@ -46,8 +46,18 @@ class ItemController:Controller() {
                 it[additionalInformation] = newAdditionalInformation
             }
         }
+
+        listOfItems.add(
+            IngredientsEntryModel().apply {
+                item = IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+            }
+        )
+
         return IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+
     }
+
+
 
     fun update(UpdatedItem: IngredientsEntryModel): Int {
         return execute {
