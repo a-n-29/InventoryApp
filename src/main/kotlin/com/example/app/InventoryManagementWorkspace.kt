@@ -20,7 +20,7 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
         Database.connect("jdbc:sqlite:./app-inventory-manager.db", "org.sqlite.JDBC")
         createTables()
 
-
+        /*
         val newEntry = execute {
             IngredientsEntryTbl.insert {
                 it[itemName]="carrot"
@@ -30,7 +30,7 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
                 it[datePurchased]= LocalDate.now().toDate()
                 it[additionalInformation]="use on Tuesday"
             }
-        }
+        }*/
 
         // pass in controller(s)
         ItemController()

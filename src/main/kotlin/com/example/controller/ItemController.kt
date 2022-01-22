@@ -59,6 +59,7 @@ class ItemController:Controller() {
                 item = IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
             }
         )
+        pieItemsData.add(PieChart.Data(newItemName,newQuantity.toDouble()))
 
         return IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
 
@@ -86,5 +87,18 @@ class ItemController:Controller() {
             }
         }
         listOfItems.remove(model)
+        removeModelFromPie(model)
+    }
+
+    private fun removeModelFromPie(model: IngredientsEntryModel) {
+        var currIndex = 0
+
+        pieItemsData.forEachIndexed{ index, data ->
+            if (data.name == model.itemName.value && index !=-1){
+                currIndex = index
+            }
+        }
+        pieItemsData.removeAt(currIndex)
+
     }
 }
