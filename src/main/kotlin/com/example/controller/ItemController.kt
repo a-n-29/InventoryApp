@@ -90,7 +90,23 @@ class ItemController:Controller() {
         removeModelFromPie(model)
     }
 
-    private fun removeModelFromPie(model: IngredientsEntryModel) {
+    fun updatePiecePie(model: IngredientsEntryModel) {
+        val modelId = model.id
+        var currIndex: Int
+
+        items.forEachIndexed { index, data ->
+            if (modelId == data.id) {
+                // we have right object to update
+                currIndex = index
+                pieItemsData[currIndex].name = data.itemName.value
+                pieItemsData[currIndex].pieValue = data.quantity.value.toDouble()
+            } else { // ignore}
+
+            }
+        }
+    }
+
+     fun removeModelFromPie(model: IngredientsEntryModel) {
         var currIndex = 0
 
         pieItemsData.forEachIndexed{ index, data ->

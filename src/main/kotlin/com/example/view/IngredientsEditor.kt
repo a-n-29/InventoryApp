@@ -159,12 +159,17 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                         mTableView = editModel
 
                         column("ID", IngredientsEntryModel::id)
-                        column("Item Name",IngredientsEntryModel::itemName)
-                        column("Subtype",IngredientsEntryModel::subtype)
-                        column("Storage Location",IngredientsEntryModel::storageLocation)
-                        column("Quantity",IngredientsEntryModel::quantity)
-                        column("Date Purchased",IngredientsEntryModel::datePurchased)
-                        column("Additional Information",IngredientsEntryModel::additionalInformation)
+                        column("Item Name",IngredientsEntryModel::itemName).makeEditable()
+                        column("Subtype",IngredientsEntryModel::subtype).makeEditable()
+                        column("Storage Location",IngredientsEntryModel::storageLocation).makeEditable()
+                        column("Quantity",IngredientsEntryModel::quantity).makeEditable()
+                        column("Date Purchased",IngredientsEntryModel::datePurchased).makeEditable()
+                        column("Additional Information",IngredientsEntryModel::additionalInformation).makeEditable()
+
+                        onEditCommit {
+                            controller.update(it)
+                            controller.updatePiecePie(it)
+                        }
 
                     }
                 }
