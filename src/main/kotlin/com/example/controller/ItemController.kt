@@ -6,7 +6,9 @@ import com.example.model.IngredientsEntryTbl
 import com.example.model.toIngredientsEntry
 import com.example.util.execute
 import com.example.util.toDate
+import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.scene.chart.PieChart
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
@@ -25,11 +27,16 @@ class ItemController:Controller() {
     }
 
     var items: ObservableList<IngredientsEntryModel> by singleAssign()
+    var pieItemsData = FXCollections.observableArrayList<PieChart.Data>()
 
     var ingredientModel = IngredientsEntryModel()
 
     init {
         items = listOfItems
+
+        items.forEach {
+            pieItemsData.add(PieChart.Data(it.itemName.value, it.quantity.value.toDouble()))
+        }
     }
 
 

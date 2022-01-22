@@ -2,6 +2,7 @@ package com.example.view
 
 import com.example.controller.ItemController
 import com.example.model.IngredientsEntryModel
+import javafx.geometry.Pos
 import javafx.scene.input.KeyCode
 import tornadofx.*
 
@@ -168,6 +169,13 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                     }
                 }
 
+            }
+        }
+
+        right = vbox {
+            alignment = Pos.CENTER
+            piechart {
+                data = controller.pieItemsData
             }
         }
     }
