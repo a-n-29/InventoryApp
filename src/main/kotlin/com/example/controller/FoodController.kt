@@ -1,9 +1,10 @@
 package com.example.controller
 
-import com.example.model.IngredientsEntry
-import com.example.model.IngredientsEntryModel
-import com.example.model.IngredientsEntryTbl
-import com.example.model.toIngredientsEntry
+import tornadofx.Controller
+import com.example.model.FoodsEntry
+import com.example.model.FoodsEntryModel
+import com.example.model.FoodsEntryTbl
+import com.example.model.toFoodsEntry
 import com.example.util.execute
 import com.example.util.toDate
 import javafx.collections.FXCollections
@@ -16,20 +17,19 @@ import org.jetbrains.exposed.sql.update
 import tornadofx.*
 import java.time.LocalDate
 
-class ItemController:Controller() {
-
-    private val listOfItems: ObservableList<IngredientsEntryModel> = execute {
-        IngredientsEntryTbl.selectAll().map{
-            IngredientsEntryModel().apply {
-                item = it.toIngredientsEntry()
+class FoodController:Controller() {
+    private val listOfItems: ObservableList<FoodsEntryModel> = execute {
+        FoodsEntryTbl.selectAll().map{
+            FoodsEntryModel().apply {
+                item = it.toFoodsEntry()
             }
         }.asObservable()
     }
 
-    var items: ObservableList<IngredientsEntryModel> by singleAssign()
+    var items: ObservableList<FoodsEntryModel> by singleAssign()
     var pieItemsData = FXCollections.observableArrayList<PieChart.Data>()
 
-    var ingredientModel = IngredientsEntryModel()
+    var ingredientModel = FoodsEntryModel()
 
     init {
         items = listOfItems
@@ -41,9 +41,9 @@ class ItemController:Controller() {
 
 
 
-    fun add( newItemName: String, newSubtype: String, newStorageLocation: String, newQuantity: Int, newDatePurchased: LocalDate, newAdditionalInformation: String) : IngredientsEntry {
+    fun add( newItemName: String, newSubtype: String, newStorageLocation: String, newQuantity: Int, newDatePurchased: LocalDate, newAdditionalInformation: String) : FoodsEntry {
         val newEntry = execute {
-            IngredientsEntryTbl.insert {
+            FoodsEntryTbl.insert {
                 //it[id] = newId
                 it[itemName] = newItemName
                 it[subtype] = newSubtype
@@ -55,21 +55,21 @@ class ItemController:Controller() {
         }
 
         listOfItems.add(
-            IngredientsEntryModel().apply {
-                item = IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+            FoodsEntryModel().apply {
+                item = FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
             }
         )
         pieItemsData.add(PieChart.Data(newItemName,newQuantity.toDouble()))
 
-        return IngredientsEntry(newEntry[IngredientsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+        return FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
 
     }
 
 
 
-    fun update(UpdatedItem: IngredientsEntryModel): Int {
+    fun update(UpdatedItem: FoodsEntryModel): Int {
         return execute {
-            IngredientsEntryTbl.update({ IngredientsEntryTbl.id eq (UpdatedItem.id.value.toInt()) }) {
+            FoodsEntryTbl.update({ FoodsEntryTbl.id eq (UpdatedItem.id.value.toInt()) }) {
                 it[itemName] = UpdatedItem.itemName.value
                 it[subtype] = UpdatedItem.subtype.value
                 it[storageLocation] = UpdatedItem.storageLocation.value
@@ -80,17 +80,17 @@ class ItemController:Controller() {
         }
     }
 
-    fun delete(model: IngredientsEntryModel) {
+    fun delete(model: FoodsEntryModel) {
         execute {
-            IngredientsEntryTbl.deleteWhere{
-                IngredientsEntryTbl.id eq (model.id.value.toInt())
+            FoodsEntryTbl.deleteWhere{
+                FoodsEntryTbl.id eq (model.id.value.toInt())
             }
         }
         listOfItems.remove(model)
         removeModelFromPie(model)
     }
 
-    fun updatePiecePie(model: IngredientsEntryModel) {
+    fun updatePiecePie(model: FoodsEntryModel) {
         val modelId = model.id
         var currIndex: Int
 
@@ -106,7 +106,7 @@ class ItemController:Controller() {
         }
     }
 
-     fun removeModelFromPie(model: IngredientsEntryModel) {
+    fun removeModelFromPie(model: FoodsEntryModel) {
         var currIndex = 0
 
         pieItemsData.forEachIndexed{ index, data ->
