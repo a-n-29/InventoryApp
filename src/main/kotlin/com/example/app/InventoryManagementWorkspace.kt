@@ -1,9 +1,11 @@
 package com.example.app
 
+import com.example.controller.BeverageController
 import com.example.controller.FoodController
 import com.example.controller.IngredientController
 import com.example.util.createTables
 import com.example.util.enableConsoleLogger
+import com.example.view.BeveragesEditor
 import com.example.view.FoodsEditor
 import com.example.view.IngredientsEditor
 import javafx.scene.control.TabPane
@@ -32,12 +34,14 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
         // pass in controller(s)
         IngredientController()
         FoodController()
+        BeverageController()
 
         //FoodController()
 
         // doc our views
         dock<IngredientsEditor>()
         dock<FoodsEditor>()
+        dock<BeveragesEditor>()
 
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE

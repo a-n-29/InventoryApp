@@ -2,6 +2,7 @@ package com.example.util
 
 import com.example.model.FoodsEntryTbl
 import com.example.model.IngredientsEntryTbl
+import com.example.model.BeveragesEntryTbl
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.Transaction
@@ -23,6 +24,7 @@ fun createTables() {
     with(newTransaction()){
         SchemaUtils.create(IngredientsEntryTbl)
         SchemaUtils.create(FoodsEntryTbl)
+        SchemaUtils.create(BeveragesEntryTbl)
     }
 }
 
