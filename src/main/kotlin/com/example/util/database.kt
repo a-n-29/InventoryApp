@@ -1,5 +1,6 @@
 package com.example.util
 
+import com.example.model.FoodsEntryTbl
 import com.example.model.IngredientsEntryTbl
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
@@ -21,6 +22,7 @@ fun enableConsoleLogger(){
 fun createTables() {
     with(newTransaction()){
         SchemaUtils.create(IngredientsEntryTbl)
+        SchemaUtils.create(FoodsEntryTbl)
     }
 }
 

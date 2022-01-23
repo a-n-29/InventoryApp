@@ -1,17 +1,14 @@
 package com.example.app
 
-import com.example.controller.ItemController
-import com.example.model.IngredientsEntryTbl
+import com.example.controller.FoodController
+import com.example.controller.IngredientController
 import com.example.util.createTables
 import com.example.util.enableConsoleLogger
-import com.example.util.execute
-import com.example.util.toDate
+import com.example.view.FoodsEditor
 import com.example.view.IngredientsEditor
 import javafx.scene.control.TabPane
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.insert
 import tornadofx.*
-import java.time.LocalDate
 
 class InventoryManagementWorkspace : Workspace("Inventory Management", NavigationMode.Tabs) {
     init {
@@ -33,10 +30,15 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
         }*/
 
         // pass in controller(s)
-        ItemController()
+        IngredientController()
+        FoodController()
+
+        //FoodController()
 
         // doc our views
         dock<IngredientsEditor>()
+        dock<FoodsEditor>()
+
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }

@@ -16,7 +16,7 @@ import org.jetbrains.exposed.sql.update
 import tornadofx.*
 import java.time.LocalDate
 
-class ItemController:Controller() {
+class IngredientController:Controller() {
 
     private val listOfItems: ObservableList<IngredientsEntryModel> = execute {
         IngredientsEntryTbl.selectAll().map{

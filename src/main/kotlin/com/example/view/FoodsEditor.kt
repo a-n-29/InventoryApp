@@ -1,16 +1,16 @@
 package com.example.view
 
-import com.example.controller.IngredientController
-import com.example.model.IngredientsEntryModel
+import com.example.controller.FoodController
+import com.example.model.FoodsEntryModel
 import javafx.geometry.Pos
 import javafx.scene.input.KeyCode
 import tornadofx.*
 
-class IngredientsEditor : View("Ingredient Item Editor") {
-    private val model = IngredientsEntryModel()
-    val controller: IngredientController by inject()
+class FoodsEditor: View("Food Item Editor") {
+    private val model = FoodsEntryModel()
+    val controller: FoodController by inject()
 
-    var mTableView: TableViewEditModel<IngredientsEntryModel> by singleAssign()
+    var mTableView: TableViewEditModel<FoodsEntryModel> by singleAssign()
 
     override val root = borderpane {
 
@@ -44,6 +44,38 @@ class IngredientsEditor : View("Ingredient Item Editor") {
                                 when{
                                     it.isNullOrEmpty() -> error("Field cannot be empty")
                                     it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                fieldset {
+                    field("Mass") {
+                        maxWidth=220.0
+                        textfield(model.mass){
+                            this.required()
+                            validator{
+                                when(it){
+                                    null -> error("The quantity cannot be blank")
+                                    else -> null
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                fieldset {
+                    field("Mass Unit") {
+                        maxWidth=220.0
+                        textfield(model.massUnit){
+                            this.required()
+                            validator{
+                                when(it){
+                                    null -> error("The quantity cannot be blank")
                                     else -> null
                                 }
                             }
@@ -161,17 +193,19 @@ class IngredientsEditor : View("Ingredient Item Editor") {
         center = vbox {
             form{
                 fieldset {
-                    tableview<IngredientsEntryModel> {
+                    tableview<FoodsEntryModel> {
                         items = controller.items
                         mTableView = editModel
 
-                        column("ID", IngredientsEntryModel::id)
-                        column("Item Name",IngredientsEntryModel::itemName).makeEditable()
-                        column("Subtype",IngredientsEntryModel::subtype).makeEditable()
-                        column("Storage Location",IngredientsEntryModel::storageLocation).makeEditable()
-                        column("Quantity",IngredientsEntryModel::quantity).makeEditable()
-                        column("Date Purchased",IngredientsEntryModel::datePurchased).makeEditable()
-                        column("Additional Information",IngredientsEntryModel::additionalInformation).makeEditable()
+                        column("ID", FoodsEntryModel::id)
+                        column("Item Name", FoodsEntryModel::itemName).makeEditable()
+                        column("Subtype", FoodsEntryModel::subtype).makeEditable()
+                        column("Mass", FoodsEntryModel::mass).makeEditable()
+                        column("Mass Unit", FoodsEntryModel::massUnit).makeEditable()
+                        column("Storage Location", FoodsEntryModel::storageLocation).makeEditable()
+                        column("Quantity", FoodsEntryModel::quantity).makeEditable()
+                        column("Date Purchased", FoodsEntryModel::datePurchased).makeEditable()
+                        column("Additional Information", FoodsEntryModel::additionalInformation).makeEditable()
 
                         onEditCommit {
                             controller.update(it)
@@ -193,6 +227,6 @@ class IngredientsEditor : View("Ingredient Item Editor") {
 
     private fun addItem() {
         controller.add(model.itemName.value,
-            model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value )
+            model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value, model.mass.value, model.massUnit.value )
     }
 }
