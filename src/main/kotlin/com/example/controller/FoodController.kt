@@ -29,7 +29,7 @@ class FoodController:Controller() {
     var items: ObservableList<FoodsEntryModel> by singleAssign()
     var pieItemsData = FXCollections.observableArrayList<PieChart.Data>()
 
-    var ingredientModel = FoodsEntryModel()
+    var foodModel = FoodsEntryModel()
 
     init {
         items = listOfItems
@@ -41,7 +41,16 @@ class FoodController:Controller() {
 
 
 
-    fun add( newItemName: String, newSubtype: String, newStorageLocation: String, newQuantity: Int, newDatePurchased: LocalDate, newAdditionalInformation: String) : FoodsEntry {
+    fun add(
+        newItemName: String,
+        newSubtype: String,
+        newStorageLocation: String,
+        newQuantity: Int,
+        newDatePurchased: LocalDate,
+        newAdditionalInformation: String,
+        newMass: Double,
+        newMassUnit: String
+    ) : FoodsEntry {
         val newEntry = execute {
             FoodsEntryTbl.insert {
                 //it[id] = newId
@@ -51,17 +60,19 @@ class FoodController:Controller() {
                 it[quantity] = newQuantity
                 it[datePurchased] = newDatePurchased.toDate()
                 it[additionalInformation] = newAdditionalInformation
+                it[mass] = newMass
+                it[massUnit] = newMassUnit
             }
         }
 
         listOfItems.add(
             FoodsEntryModel().apply {
-                item = FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+                item = FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation, newMass, newMassUnit)
             }
         )
         pieItemsData.add(PieChart.Data(newItemName,newQuantity.toDouble()))
 
-        return FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation)
+        return FoodsEntry(newEntry[FoodsEntryTbl.id], newItemName, newSubtype, newStorageLocation, newQuantity, newDatePurchased, newAdditionalInformation, newMass, newMassUnit)
 
     }
 
@@ -76,6 +87,8 @@ class FoodController:Controller() {
                 it[quantity] = UpdatedItem.quantity.value.toInt()
                 it[datePurchased] = UpdatedItem.datePurchased.value.toDate()
                 it[additionalInformation] = UpdatedItem.additionalInformation.value
+                it[mass] = UpdatedItem.mass.value
+                it[massUnit] = UpdatedItem.massUnit.value
             }
         }
     }

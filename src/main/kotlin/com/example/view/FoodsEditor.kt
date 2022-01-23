@@ -5,7 +5,6 @@ import com.example.model.FoodsEntryModel
 import javafx.geometry.Pos
 import javafx.scene.input.KeyCode
 import tornadofx.*
-import kotlin.error
 
 class FoodsEditor: View("Food Item Editor") {
     private val model = FoodsEntryModel()
@@ -45,6 +44,38 @@ class FoodsEditor: View("Food Item Editor") {
                                 when{
                                     it.isNullOrEmpty() -> error("Field cannot be empty")
                                     it.length < 3 -> error("Too short")
+                                    else -> null
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                fieldset {
+                    field("Mass") {
+                        maxWidth=220.0
+                        textfield(model.mass){
+                            this.required()
+                            validator{
+                                when(it){
+                                    null -> error("The quantity cannot be blank")
+                                    else -> null
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                fieldset {
+                    field("Mass Unit") {
+                        maxWidth=220.0
+                        textfield(model.massUnit){
+                            this.required()
+                            validator{
+                                when(it){
+                                    null -> error("The quantity cannot be blank")
                                     else -> null
                                 }
                             }
@@ -169,6 +200,8 @@ class FoodsEditor: View("Food Item Editor") {
                         column("ID", FoodsEntryModel::id)
                         column("Item Name", FoodsEntryModel::itemName).makeEditable()
                         column("Subtype", FoodsEntryModel::subtype).makeEditable()
+                        column("Mass", FoodsEntryModel::mass).makeEditable()
+                        column("Mass Unit", FoodsEntryModel::massUnit).makeEditable()
                         column("Storage Location", FoodsEntryModel::storageLocation).makeEditable()
                         column("Quantity", FoodsEntryModel::quantity).makeEditable()
                         column("Date Purchased", FoodsEntryModel::datePurchased).makeEditable()
@@ -194,6 +227,6 @@ class FoodsEditor: View("Food Item Editor") {
 
     private fun addItem() {
         controller.add(model.itemName.value,
-            model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value )
+            model.subtype.value, model.storageLocation.value, model.quantity.value, model.datePurchased.value, model.additionalInformation.value, model.mass.value, model.massUnit.value )
     }
 }

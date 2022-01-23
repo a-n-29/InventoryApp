@@ -4,6 +4,7 @@ package com.example.model
 import com.example.model.FoodsEntryTbl.autoIncrement
 import com.example.model.FoodsEntryTbl.primaryKey
 import com.example.util.toJavaLocalDate
+import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -21,7 +22,10 @@ fun ResultRow.toFoodsEntry() = FoodsEntry(
     this[FoodsEntryTbl.storageLocation],
     this[FoodsEntryTbl.quantity],
     this[FoodsEntryTbl.datePurchased].toJavaLocalDate(),
-    this[FoodsEntryTbl.additionalInformation]
+    this[FoodsEntryTbl.additionalInformation],
+    this[FoodsEntryTbl.mass],
+    this[FoodsEntryTbl.massUnit]
+
 
 )
 
@@ -33,10 +37,13 @@ object FoodsEntryTbl: Table() {
     val quantity: Column<Int> = integer(name= "quantity")
     val datePurchased: Column<DateTime> = date(name = "date_purchased")
     val additionalInformation: Column<String> = varchar(name = "additional_info", length = 200)
+
+    val mass: Column<Double> = double(name = "mass")
+    val massUnit: Column<String> = varchar(name = "mass_unit", length = 50)
 }
 
 
-class FoodsEntry(id: Int, itemName: String, subtype: String, storageLocation: String, quantity: Int, datePurchased: java.time.LocalDate, additionalInformation: String){
+class FoodsEntry(id: Int, itemName: String, subtype: String, storageLocation: String, quantity: Int, datePurchased: java.time.LocalDate, additionalInformation: String, mass: Double, massUnit: String){
 
     val idProperty = SimpleIntegerProperty(id)
     var id by idProperty
@@ -59,8 +66,14 @@ class FoodsEntry(id: Int, itemName: String, subtype: String, storageLocation: St
     val additionalInformationProperty = SimpleStringProperty(additionalInformation)
     val additionalInformation by additionalInformationProperty
 
+    val massProperty = SimpleDoubleProperty(mass)
+    val mass by massProperty
+
+    val massUnitProperty = SimpleStringProperty(massUnit)
+    val massUnit by massUnitProperty
+
     override fun toString(): String {
-        return "FoodsEntry(id=$id, itemName=$itemName, subtype=$subtype, storageLocation=$storageLocation, quantity=$quantity, datePurchased=$datePurchased, additionalInformation=$additionalInformation)"
+        return "FoodsEntry(id=$id, itemName=$itemName, subtype=$subtype, storageLocation=$storageLocation, quantity=$quantity, datePurchased=$datePurchased, additionalInformation=$additionalInformation, mass=$mass, massUnit=$massUnit)"
     }
 }
 
@@ -72,5 +85,7 @@ class FoodsEntryModel : ItemViewModel<FoodsEntry>(){
     val quantity = bind{item?.quantityProperty}
     val datePurchased = bind{item?.datePurchasedProperty}
     val additionalInformation = bind{item?.additionalInformationProperty}
+    val mass = bind{item?.massProperty}
+    val massUnit = bind{item?.massUnitProperty}
 
 }
