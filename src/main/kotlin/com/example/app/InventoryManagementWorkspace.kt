@@ -31,11 +31,13 @@ class InventoryManagementWorkspace : Workspace("Inventory Management", Navigatio
 
         // pass in controller(s)
         IngredientController()
+        FoodController()
+
         //FoodController()
 
         // doc our views
         dock<IngredientsEditor>()
-        //dock<FoodsEditor>()
+        dock<FoodsEditor>()
 
 
         tabContainer.tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
