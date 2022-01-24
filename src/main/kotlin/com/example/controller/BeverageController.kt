@@ -18,7 +18,7 @@ import tornadofx.*
 import java.time.LocalDate
 
 class BeverageController:Controller() {
-    private val listOfItems: ObservableList<BeveragesEntryModel> = execute {
+    val listOfItems: ObservableList<BeveragesEntryModel> = execute {
         BeveragesEntryTbl.selectAll().map{
             BeveragesEntryModel().apply {
                 item = it.toBeveragesEntry()

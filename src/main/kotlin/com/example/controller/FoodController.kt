@@ -18,12 +18,17 @@ import tornadofx.*
 import java.time.LocalDate
 
 class FoodController:Controller() {
-    private val listOfItems: ObservableList<FoodsEntryModel> = execute {
+    val listOfItems: ObservableList<FoodsEntryModel> = execute {
         FoodsEntryTbl.selectAll().map{
             FoodsEntryModel().apply {
                 item = it.toFoodsEntry()
             }
         }.asObservable()
+    }
+
+    @JvmName("getListOfItemsF")
+    fun getListOfItems(): ObservableList<FoodsEntryModel> {
+        return listOfItems
     }
 
     var items: ObservableList<FoodsEntryModel> by singleAssign()

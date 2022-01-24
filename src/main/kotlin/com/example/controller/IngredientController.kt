@@ -18,7 +18,7 @@ import java.time.LocalDate
 
 class IngredientController:Controller() {
 
-    private val listOfItems: ObservableList<IngredientsEntryModel> = execute {
+    val listOfItems: ObservableList<IngredientsEntryModel> = execute {
         IngredientsEntryTbl.selectAll().map{
             IngredientsEntryModel().apply {
                 item = it.toIngredientsEntry()
